@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Tienda Gestión</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">Mi Tienda</div>
+        <div class="navbar-menu">
+            <a th:href="@{/dashboard}" class="active">🏠 Dashboard</a>
+            <a th:href="@{/productos}">📦 Productos</a>
+            <a th:href="@{/ventas}">💰 Ventas</a>
+            <a th:href="@{/compras}">🛒 Compras</a>
+            <a th:href="@{/alertas}">🔔 Alertas</a>
+            <a th:href="@{/reportes}">📊 Reportes</a>
+            <a th:href="@{/logout}">🚪 Salir</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h1>📊 Panel de Control</h1>
+            <p style="color: var(--gray);">Bienvenido a tu tienda virtual</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-value" th:text="${totalProductos}">0</div>
+                <div class="stat-label">Total Productos</div>
+            </div>
+            
+            <div class="stat-card warning">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-value" th:text="${productosStockBajo}">0</div>
+                <div class="stat-label">Stock Bajo</div>
+            </div>
+            
+            <div class="stat-card danger">
+                <div class="stat-icon">⏰</div>
+                <div class="stat-value" th:text="${productosPorVencer}">0</div>
+                <div class="stat-label">Por Vencer (7 días)</div>
+            </div>
+            
+            <div class="stat-card danger">
+                <div class="stat-icon">❌</div>
+                <div class="stat-value" th:text="${productosVencidos}">0</div>
+                <div class="stat-label">Vencidos</div>
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card success">
+                <div class="stat-icon">💵</div>
+                <div class="stat-value" th:text="${'S/ ' + ventasDia}">S/ 0</div>
+                <div class="stat-label">Ventas de Hoy</div>
+            </div>
+            
+            <div class="stat-card success">
+                <div class="stat-icon">📈</div>
+                <div class="stat-value" th:text="${'S/ ' + ventasMes}">S/ 0</div>
+                <div class="stat-label">Ventas del Mes</div>
+            </div>
+            
+            <div class="stat-card info">
+                <div class="stat-icon">🛒</div>
+                <div class="stat-value" th:text="${'S/ ' + comprasMes}">S/ 0</div>
+                <div class="stat-label">Compras del Mes</div>
+            </div>
+        </div>
+        
+        <div class="quick-actions">
+            <h2>⚡ Acciones Rápidas</h2>
+            <div class="actions-grid">
+                <a th:href="@{/productos/nuevo}" class="btn btn-primary">➕ Nuevo Producto</a>
+                <a th:href="@{/ventas/nueva}" class="btn btn-success">💵 Nueva Venta</a>
+                <a th:href="@{/compras/nueva}" class="btn btn-info">📥 Nueva Compra</a>
+                <a th:href="@{/alertas}" class="btn btn-warning">🔔 Ver Alertas</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+package com.tienda.tienda_gestion.controller;
+
+import com.tienda.tienda_gestion.model.Producto;
+import com.tienda.tienda_gestion.service.ProductoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+
+@Controller
+@RequestMapping("/productos")
+public class ProductoController {
+    
+    @Autowired
+    private ProductoService productoService;
+    
+    @GetMapping
+    public String listarProductos(Model model) {
+        List<Producto> productos = productoService.findAll();
+        model.addAttribute("productos", productos);
+        return "productos";
+    }
+    
+    @GetMapping("/nuevo")
+    public String formularioNuevo(Model model) {
+        model.addAttribute("producto", new Producto());
+        return "productos-form";
+    }
+    
+    @PostMapping("/guardar")
+    public String guardarProducto(@ModelAttribute Producto producto, RedirectAttributes redirectAttributes) {
+        productoService.save(producto);
+        redirectAttributes.addFlashAttribute("success", "Producto guardado exitosamente");
+        return "redirect:/productos";
+    }
+    
+    @GetMapping("/editar/{id}")
+    public String formularioEditar(@PathVariable Long id, Model model) {
+        productoService.findById(id).ifPresent(producto -> model.addAttribute("producto", producto));
+        return "productos-form";
+    }
+    
+    @GetMapping("/eliminar/{id}")
+    public String eliminarProducto(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        productoService.deleteById(id);
+        redirectAttributes.addFlashAttribute("success", "Producto eliminado exitosamente");
+        return "redirect:/productos";
+    }
+}

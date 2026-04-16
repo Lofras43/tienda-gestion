@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Compra - Tienda Gestión</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">Tienda Gestión</div>
+        <div class="navbar-menu">
+            <a th:href="@{/dashboard}">Dashboard</a>
+            <a th:href="@{/productos}">Productos</a>
+            <a th:href="@{/ventas}">Ventas</a>
+            <a th:href="@{/compras}" class="active">Compras</a>
+            <a th:href="@{/alertas}">Alertas</a>
+            <a th:href="@{/logout}">Cerrar Sesión</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h1>Nueva Compra</h1>
+        </div>
+        
+        <form th:action="@{/compras/guardar}" th:object="${compra}" method="post" class="form">
+            <div class="form-group">
+                <label for="producto">Producto</label>
+                <select id="producto" name="productoId" required>
+                    <option value="">-- Seleccionar --</option>
+                    <option th:each="prod : ${productos}" 
+                            th:value="${prod.id}" 
+                            th:text="${prod.nombre + ' (Stock actual: ' + prod.stock + ')'}">
+                    </option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="cantidad">Cantidad a Comprar</label>
+                <input type="number" id="cantidad" name="cantidad" min="1" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="proveedor">Proveedor</label>
+                    <input type="text" id="proveedor" th:field="*{proveedor}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="numeroFactura">N° de Factura</label>
+                    <input type="text" id="numeroFactura" th:field="*{numeroFactura}">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="precioUnitario">Precio Unitario (S/)</label>
+                    <input type="number" step="0.01" id="precioUnitario" name="precioUnitario" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="total">Total (S/)</label>
+                    <input type="number" step="0.01" id="total" th:field="*{total}" readonly>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">💾 Guardar Compra</button>
+                <a th:href="@{/compras}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

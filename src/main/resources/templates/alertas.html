@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alertas - Tienda Gestión</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">Mi Tienda</div>
+        <div class="navbar-menu">
+            <a th:href="@{/dashboard}">🏠 Dashboard</a>
+            <a th:href="@{/productos}">📦 Productos</a>
+            <a th:href="@{/ventas}">💰 Ventas</a>
+            <a th:href="@{/compras}">🛒 Compras</a>
+            <a th:href="@{/alertas}" class="active">🔔 Alertas</a>
+            <a th:href="@{/reportes}">📊 Reportes</a>
+            <a th:href="@{/logout}">🚪 Salir</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h1>🔔 Centro de Alertas</h1>
+        </div>
+        
+        <!-- Productos con Stock Bajo -->
+        <div class="alert-section">
+            <div class="alert-header warning">
+                <h2>⚠️ Productos con Stock Bajo</h2>
+                <span class="badge" th:text="${stockBajo.size()}">0</span>
+            </div>
+            
+            <table class="data-table" th:if="${not stockBajo.empty}">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Stock Actual</th>
+                        <th>Stock Mínimo</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="prod : ${stockBajo}">
+                        <td><strong th:text="${prod.nombre}"></strong></td>
+                        <td class="text-danger" th:text="${prod.stock}"></td>
+                        <td th:text="${prod.stockMinimo}"></td>
+                        <td>
+                            <a th:href="@{/compras/nueva}" class="btn btn-small btn-warning">🛒 Comprar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div th:if="${stockBajo.empty}" class="empty-message">
+                ✅ No hay productos con stock bajo
+            </div>
+        </div>
+        
+        <!-- Productos Próximos a Vencer -->
+        <div class="alert-section">
+            <div class="alert-header info">
+                <h2>⏰ Productos Próximos a Vencer</h2>
+                <span class="badge" th:text="${porVencer.size()}">0</span>
+            </div>
+            
+            <table class="data-table" th:if="${not porVencer.empty}">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Días Restantes</th>
+                        <th>Stock</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="prod : ${porVencer}">
+                        <td th:text="${prod.nombre}"></td>
+                        <td th:text="${prod.fechaVencimiento}"></td>
+                        <td th:text="${T(java.time.temporal.ChronoUnit).DAYS.between(T(java.time.LocalDate).now(), prod.fechaVencimiento) + ' días'}"></td>
+                        <td th:text="${prod.stock}"></td>
+                        <td>
+                            <a th:href="@{/productos/editar/{id}(id=${prod.id})}" class="btn btn-small btn-primary">✏️</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div th:if="${porVencer.empty}" class="empty-message">
+                ✅ No hay productos próximos a vencer
+            </div>
+        </div>
+        
+        <!-- Productos Vencidos -->
+        <div class="alert-section">
+            <div class="alert-header danger">
+                <h2>❌ Productos Vencidos</h2>
+                <span class="badge" th:text="${vencidos.size()}">0</span>
+            </div>
+            
+            <table class="data-table" th:if="${not vencidos.empty}">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Días Vencido</th>
+                        <th>Stock</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="prod : ${vencidos}">
+                        <td th:text="${prod.nombre}"></td>
+                        <td th:text="${prod.fechaVencimiento}"></td>
+                        <td class="text-danger" th:text="${T(java.time.temporal.ChronoUnit).DAYS.between(prod.fechaVencimiento, T(java.time.LocalDate).now()) + ' días'}"></td>
+                        <td th:text="${prod.stock}"></td>
+                        <td>
+                            <a th:href="@{/productos/eliminar/{id}(id=${prod.id})}" class="btn btn-small btn-danger" onclick="return confirm('¿Eliminar producto vencido?')">🗑️</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div th:if="${vencidos.empty}" class="empty-message">
+                ✅ No hay productos vencidos
+            </div>
+        </div>
+    </div>
+</body>
+</html>

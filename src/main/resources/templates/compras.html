@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras - Tienda Gestión</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">Mi Tienda</div>
+        <div class="navbar-menu">
+            <a th:href="@{/dashboard}">🏠 Dashboard</a>
+            <a th:href="@{/productos}">📦 Productos</a>
+            <a th:href="@{/ventas}">💰 Ventas</a>
+            <a th:href="@{/compras}" class="active">🛒 Compras</a>
+            <a th:href="@{/alertas}">🔔 Alertas</a>
+            <a th:href="@{/reportes}">📊 Reportes</a>
+            <a th:href="@{/logout}">🚪 Salir</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h1>🛒 Registro de Compras</h1>
+            <a th:href="@{/compras/nueva}" class="btn btn-primary">➕ Nueva Compra</a>
+        </div>
+        
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+        
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Proveedor</th>
+                    <th>N° Factura</th>
+                    <th>Total</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="compra : ${compras}">
+                    <td>#<span th:text="${compra.id}"></span></td>
+                    <td th:text="${#temporals.format(compra.fechaCompra, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${compra.proveedor}"></td>
+                    <td th:text="${compra.numeroFactura}"></td>
+                    <td><strong th:text="${'S/ ' + compra.total}"></strong></td>
+                    <td>
+                        <button class="btn btn-small btn-info">👁️ Ver</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div th:if="${compras.empty}" class="empty-message">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🛒</div>
+            <h3>No hay compras registradas</h3>
+            <p>¡Registra tu primera compra!</p>
+            <a th:href="@{/compras/nueva}" class="btn btn-primary" style="margin-top: 1rem;">➕ Registrar Compra</a>
+        </div>
+    </div>
+</body>
+</html>

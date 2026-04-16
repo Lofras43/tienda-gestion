@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas - Tienda Gestión</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">Mi Tienda</div>
+        <div class="navbar-menu">
+            <a th:href="@{/dashboard}">🏠 Dashboard</a>
+            <a th:href="@{/productos}">📦 Productos</a>
+            <a th:href="@{/ventas}" class="active">💰 Ventas</a>
+            <a th:href="@{/compras}">🛒 Compras</a>
+            <a th:href="@{/alertas}">🔔 Alertas</a>
+            <a th:href="@{/reportes}">📊 Reportes</a>
+            <a th:href="@{/logout}">🚪 Salir</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h1>💰 Registro de Ventas</h1>
+            <a th:href="@{/ventas/nueva}" class="btn btn-success">➕ Nueva Venta</a>
+        </div>
+        
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+        
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="venta : ${ventas}">
+                    <td>#<span th:text="${venta.id}"></span></td>
+                    <td th:text="${#temporals.format(venta.fechaVenta, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td><strong th:text="${'S/ ' + venta.total}"></strong></td>
+                    <td>
+                        <button class="btn btn-small btn-info">👁️ Ver</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div th:if="${ventas.empty}" class="empty-message">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">💰</div>
+            <h3>No hay ventas registradas</h3>
+            <p>¡Registra tu primera venta!</p>
+            <a th:href="@{/ventas/nueva}" class="btn btn-success" style="margin-top: 1rem;">➕ Registrar Venta</a>
+        </div>
+    </div>
+</body>
+</html>
