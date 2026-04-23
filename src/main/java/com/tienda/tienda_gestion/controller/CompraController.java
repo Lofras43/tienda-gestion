@@ -28,6 +28,7 @@ public class CompraController {
     @GetMapping("/nueva")
     public String nuevaCompra(Model model) {
         model.addAttribute("compra", new Compra());
+        model.addAttribute("productos", productoService.findAll());
         return "compras-form";
     }
     
