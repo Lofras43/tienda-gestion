@@ -21,8 +21,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, CustomUserDetailsService userDetailsService, PasswordEncoder passwordEncoder) throws Exception {
         http
             .userDetailsService(userDetailsService)
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/login", "/registro", "/css/**", "/js/**", "/images/**").permitAll()
+            .authorizeRequests(auth -> auth
+                .antMatchers("/", "/login", "/registro", "/css/**", "/js/**", "/images/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
