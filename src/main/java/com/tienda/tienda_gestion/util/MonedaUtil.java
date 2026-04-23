@@ -1,9 +1,11 @@
 package com.tienda.tienda_gestion.util;
 
+import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+@Component
 public class MonedaUtil {
     
     private static final Locale LOCALE_PERU = new Locale("es", "PE");

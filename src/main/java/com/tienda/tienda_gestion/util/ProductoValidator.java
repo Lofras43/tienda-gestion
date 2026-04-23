@@ -1,10 +1,12 @@
 package com.tienda.tienda_gestion.util;
 
 import com.tienda.tienda_gestion.model.Producto;
+import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ProductoValidator {
     
     public static List<String> validar(Producto producto) {

@@ -2,6 +2,8 @@ package com.tienda.tienda_gestion.service;
 
 import com.tienda.tienda_gestion.dao.*;
 import com.tienda.tienda_gestion.model.*;
+import com.tienda.tienda_gestion.exception.BusinessException;
+import com.tienda.tienda_gestion.exception.StockInsuficienteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,8 +71,14 @@ public class VentaService {
                     producto.setStock(producto.getStock() - detalle.getCantidad());
                     productoRepository.save(producto);
                 } else {
-                    throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre());
+                    throw new StockInsuficienteException(
+                        producto.getId(),
+                        producto.getStock(),
+                        detalle.getCantidad()
+                    );
                 }
+            } else {
+                throw new BusinessException("Producto no encontrado", "PRODUCTO_NO_ENCONTRADO");
             }
         }
         
