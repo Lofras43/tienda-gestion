@@ -1,0 +1,48 @@
+BPM - PROCESO DE COMPRA
+========================
+
+[INICIO]
+    │
+    ▼
+[1. Seleccionar Producto]
+    │
+    ▼
+[2. Validar si Existe]
+    │
+    ├─────── Sí ───────┐
+    │                   ▼
+    │           [3. Ingresar Cantidad]
+    │                   │
+    │                   ▼
+    │           [5. Ingresar Precio Compra]
+    │                   │
+    │                   ▼
+    │           [6. Calcular Total]
+    │                   │
+    │                   ▼
+    │           [7. Registrar Compra en BD]
+    │                   │
+    │                   ▼
+    │           [8. Actualizar Stock (+)]
+    │                   │
+    │                   ▼
+    │           [9. Registrar Fecha Vencimiento]
+    │                   │
+    │                   ▼
+    │           [10. Confirmar Compra]
+    │                   │
+    │                   ▼
+    └───────────────▶ [FIN]
+    │
+    No
+    ▼
+[4. Crear Nuevo Producto]
+    │
+    ▼
+(regresa a Validar si Existe)
+
+
+Leyenda:
+- [ ] = Rectángulo (Proceso)
+- ──▶ = Flecha (Flujo)
+- │ = Flecha vertical

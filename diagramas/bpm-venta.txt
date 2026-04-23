@@ -1,0 +1,38 @@
+BPM - PROCESO DE VENTA
+========================
+
+[INICIO]
+    │
+    ▼
+[1. Buscar/Seleccionar Producto]
+    │
+    ▼
+[2. Validar Disponibilidad]
+    │
+    ▼
+[3. Verificar Stock]
+    │
+    ├─────── Sí ───────┐
+    │                   ▼
+    │           [4. Ingresar Cantidad]
+    │                   │
+    │                   ▼
+    │           [5. Calcular Total]
+    │                   │
+    │                   ▼
+    │           [6. Registrar Venta en BD]
+    │                   │
+    │                   ▼
+    │           [7. Actualizar Stock]
+    │                   │
+    │                   ▼
+    └───────────────▶ [8. Confirmar Venta]
+                              │
+                              ▼
+[FIN]
+
+
+Leyenda:
+- [ ] = Rectángulo (Proceso)
+- ──▶ = Flecha (Flujo)
+- │ = Flecha vertical

@@ -2,6 +2,9 @@ package com.tienda.tienda_gestion.controller;
 
 import com.tienda.tienda_gestion.model.Producto;
 import com.tienda.tienda_gestion.service.ProductoService;
+import com.tienda.tienda_gestion.util.ProductoValidator;
+import com.tienda.tienda_gestion.util.FechaUtil;
+import com.tienda.tienda_gestion.util.MonedaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +19,9 @@ public class ProductoController {
     
     @Autowired
     private ProductoService productoService;
+    
+    @Autowired
+    private ProductoValidator productoValidator;
     
     @GetMapping
     public String listarProductos(Model model) {
