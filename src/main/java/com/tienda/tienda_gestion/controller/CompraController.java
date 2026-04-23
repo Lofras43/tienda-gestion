@@ -32,16 +32,37 @@ public class CompraController {
         return "compras-form";
     }
     
-    @PostMapping("/guardar")
+@PostMapping("/guardar")
     public String guardarCompra(@ModelAttribute Compra compra,
-                                 @RequestParam Long productoId,
-                                 @RequestParam Integer cantidad,
-                                 RedirectAttributes redirectAttributes) {
+                         @RequestParam Long productoId,
+                         @RequestParam Integer cantidad,
+                         @RequestParam Double precioUnitario,
+                         RedirectAttributes redirectAttributes) {
         try {
+            if (cantidad == null || cantidad <= 0) {
+                redirectAttributes.addFlashAttribute("error", "La cantidad debe ser mayor a 0");
+                return "redirect:/compras/nueva";
+            }
+            
+            if (precioUnitario == null || precioUnitario <= 0) {
+                redirectAttributes.addFlashAttribute("error", "El precio debe ser mayor a 0");
+                return "redirect:/compras/nueva";
+            }
+            
+            if (productoId != null && productoId == -1) {
+                redirectAttributes.addFlashAttribute("error", "Debe seleccionar un producto válido");
+                return "redirect:/compras/nueva";
+            }
+            
+            java.math.BigDecimal total = java.math.BigDecimal.valueOf(cantidad * precioUnitario);
+            compra.setTotal(total);
+            
             productoService.actualizarStock(productoId, cantidad);
-            compra.setTotal(compra.getTotal());
+            
+            compra.setFechaCompra(java.time.LocalDateTime.now());
             compraService.registrarCompra(compra);
-            redirectAttributes.addFlashAttribute("success", "Compra registrada exitosamente");
+            
+            redirectAttributes.addFlashAttribute("success", "Compra registrada - Total: S/ " + total);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al registrar compra: " + e.getMessage());
         }

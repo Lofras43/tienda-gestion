@@ -27,18 +27,20 @@
         <form th:action="@{/compras/guardar}" th:object="${compra}" method="post" class="form">
             <div class="form-group">
                 <label for="producto">Producto</label>
-                <select id="producto" name="productoId" required>
+                <select id="producto" name="productoId" required onchange="cargarProducto()">
                     <option value="">-- Seleccionar --</option>
                     <option th:each="prod : ${productos}" 
                             th:value="${prod.id}" 
-                            th:text="${prod.nombre + ' (Stock actual: ' + prod.stock + ')'}">
+                            th:data-precio="${prod.precioCompra}"
+                            th:data-stock="${prod.stock}"
+                            th:text="${prod.nombre + ' (Stock: ' + prod.stock + ')'}">
                     </option>
                 </select>
             </div>
             
             <div class="form-group">
                 <label for="cantidad">Cantidad a Comprar</label>
-                <input type="number" id="cantidad" name="cantidad" min="1" required>
+                <input type="number" id="cantidad" name="cantidad" min="1" value="1" required oninput="calcularTotal()">
             </div>
             
             <div class="form-row">
@@ -49,19 +51,19 @@
                 
                 <div class="form-group">
                     <label for="numeroFactura">N° de Factura</label>
-                    <input type="text" id="numeroFactura" th:field="*{numeroFactura}">
+                    <input type="text" id="numeroFactura" th:field="*{numeroFactura}" readonly>
                 </div>
             </div>
             
             <div class="form-row">
                 <div class="form-group">
                     <label for="precioUnitario">Precio Unitario (S/)</label>
-                    <input type="number" step="0.01" id="precioUnitario" name="precioUnitario" required>
+                    <input type="number" step="0.01" id="precioUnitario" name="precioUnitario" value="0" required oninput="calcularTotal()">
                 </div>
                 
                 <div class="form-group">
                     <label for="total">Total (S/)</label>
-                    <input type="number" step="0.01" id="total" th:field="*{total}" readonly>
+                    <input type="number" step="0.01" id="total" th:field="*{total}" readonly style="font-weight: bold; font-size: 1.2em;">
                 </div>
             </div>
             
@@ -71,5 +73,29 @@
             </div>
         </form>
     </div>
+    
+    <script>
+    document.getElementById('numeroFactura').value = 'FAC-' + new Date().getTime();
+    
+    function cargarProducto() {
+        const select = document.getElementById('producto');
+        const opciones = select.options[select.selectedIndex];
+        const precioInput = document.getElementById('precioUnitario');
+        
+        if (opciones.value && opciones.dataset.precio) {
+            precioInput.value = opciones.dataset.precio;
+        } else {
+            precioInput.value = 0;
+        }
+        calcularTotal();
+    }
+    
+    function calcularTotal() {
+        const cantidad = parseFloat(document.getElementById('cantidad').value) || 0;
+        const precio = parseFloat(document.getElementById('precioUnitario').value) || 0;
+        const total = cantidad * precio;
+        document.getElementById('total').value = total.toFixed(2);
+    }
+    </script>
 </body>
 </html>
