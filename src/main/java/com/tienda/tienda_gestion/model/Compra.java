@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "compras")
@@ -32,6 +33,9 @@ public class Compra {
     
     @Column(name = "esta_activo")
     private Boolean estaActivo = true;
+    
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DetalleCompra> detalles;
     
     @PrePersist
     protected void onCreate() {

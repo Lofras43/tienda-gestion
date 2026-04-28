@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Venta</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">Mi Tienda</div>
+        <div class="navbar-menu">
+            <a th:href="@{/dashboard}">🏠 Dashboard</a>
+            <a th:href="@{/productos}">📦 Productos</a>
+            <a th:href="@{/ventas}" class="active">💰 Ventas</a>
+            <a th:href="@{/compras}">🛒 Compras</a>
+            <a th:href="@{/alertas}">🔔 Alertas</a>
+            <a th:href="@{/reportes}">📊 Reportes</a>
+            <a th:href="@{/logout}">🚪 Salir</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Detalle de Venta #<span th:text="${venta.id}"></span></h1>
+        
+        <div class="info-venta">
+            <p><strong>Fecha:</strong> <span th:text="${#temporals.format(venta.fechaVenta, 'dd/MM/yyyy HH:mm')}"></span></p>
+            <p><strong>Total:</strong> S/ <span th:text="${venta.total}"></span></p>
+            <p><strong>Usuario:</strong> <span th:text="${venta.usuario?.nombre ?: 'N/A'}"></span></p>
+        </div>
+        
+        <h2>Productos Vendidos</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unit.</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="detalle : ${detalles}">
+                    <td th:text="${detalle.producto.nombre}"></td>
+                    <td th:text="${detalle.cantidad}"></td>
+                    <td>S/ <span th:text="${detalle.precioUnitario}"></span></td>
+                    <td>S/ <span th:text="${detalle.subtotal}"></span></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <a href="/ventas" class="btn btn-secondary">Volver</a>
+    </div>
+</body>
+</html>

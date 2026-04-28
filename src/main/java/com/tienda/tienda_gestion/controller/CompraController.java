@@ -1,6 +1,8 @@
 package com.tienda.tienda_gestion.controller;
 
+import com.tienda.tienda_gestion.dao.DetalleCompraRepository;
 import com.tienda.tienda_gestion.model.Compra;
+import com.tienda.tienda_gestion.model.DetalleCompra;
 import com.tienda.tienda_gestion.service.CompraService;
 import com.tienda.tienda_gestion.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/compras")
@@ -18,6 +22,9 @@ public class CompraController {
     
     @Autowired
     private ProductoService productoService;
+    
+    @Autowired
+    private DetalleCompraRepository detalleCompraRepository;
     
     @GetMapping
     public String listarCompras(Model model) {
@@ -32,7 +39,7 @@ public class CompraController {
         return "compras-form";
     }
     
-@PostMapping("/guardar")
+    @PostMapping("/guardar")
     public String guardarCompra(@ModelAttribute Compra compra,
                          @RequestParam Long productoId,
                          @RequestParam Integer cantidad,
@@ -67,5 +74,18 @@ public class CompraController {
             redirectAttributes.addFlashAttribute("error", "Error al registrar compra: " + e.getMessage());
         }
         return "redirect:/compras";
+    }
+    
+    @GetMapping("/ver/{id}")
+    public String verCompra(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return compraService.findById(id)
+                .map(compra -> {
+                    model.addAttribute("compra", compra);
+                    return "compras-ver";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("error", "Compra no encontrada");
+                    return "redirect:/compras";
+                });
     }
 }

@@ -49,7 +49,7 @@
                     <td th:text="${compra.numeroFactura}"></td>
                     <td><strong th:text="${'S/ ' + compra.total}"></strong></td>
                     <td>
-                        <button class="btn btn-small btn-info">👁️ Ver</button>
+                        <a th:href="@{/compras/ver/{id}(id=${compra.id})}" class="btn btn-small btn-info">👁️ Ver</a>
                     </td>
                 </tr>
             </tbody>

@@ -1,7 +1,8 @@
 package com.tienda.tienda_gestion.controller;
 
-import com.tienda.tienda_gestion.model.Producto;
+import com.tienda.tienda_gestion.dao.DetalleVentaRepository;
 import com.tienda.tienda_gestion.model.DetalleVenta;
+import com.tienda.tienda_gestion.model.Producto;
 import com.tienda.tienda_gestion.service.ProductoService;
 import com.tienda.tienda_gestion.service.VentaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class VentaController {
     
     @Autowired
     private ProductoService productoService;
+    
+    @Autowired
+    private DetalleVentaRepository detalleVentaRepository;
     
     @GetMapping
     public String listarVentas(Model model) {
@@ -58,5 +62,20 @@ public class VentaController {
             redirectAttributes.addFlashAttribute("error", "Error al registrar venta: " + e.getMessage());
         }
         return "redirect:/ventas";
+    }
+    
+    @GetMapping("/ver/{id}")
+    public String verVenta(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return ventaService.findById(id)
+                .map(venta -> {
+                    List<DetalleVenta> detalles = detalleVentaRepository.findByVentaId(id);
+                    model.addAttribute("venta", venta);
+                    model.addAttribute("detalles", detalles);
+                    return "ventas-ver";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("error", "Venta no encontrada");
+                    return "redirect:/ventas";
+                });
     }
 }

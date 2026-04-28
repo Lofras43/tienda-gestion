@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Compra</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">Mi Tienda</div>
+        <div class="navbar-menu">
+            <a th:href="@{/dashboard}">🏠 Dashboard</a>
+            <a th:href="@{/productos}">📦 Productos</a>
+            <a th:href="@{/ventas}">💰 Ventas</a>
+            <a th:href="@{/compras}" class="active">🛒 Compras</a>
+            <a th:href="@{/alertas}">🔔 Alertas</a>
+            <a th:href="@{/reportes}">📊 Reportes</a>
+            <a th:href="@{/logout}">🚪 Salir</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Detalle de Compra #<span th:text="${compra.id}"></span></h1>
+        
+        <div class="info-venta">
+            <p><strong>Fecha:</strong> <span th:text="${#temporals.format(compra.fechaCompra, 'dd/MM/yyyy HH:mm')}"></span></p>
+            <p><strong>Proveedor:</strong> <span th:text="${compra.proveedor}"></span></p>
+            <p><strong>N° Factura:</strong> <span th:text="${compra.numeroFactura}"></span></p>
+            <p><strong>Total:</strong> S/ <span th:text="${compra.total}"></span></p>
+        </div>
+        
+        <a href="/compras" class="btn btn-secondary">Volver</a>
+    </div>
+</body>
+</html>
