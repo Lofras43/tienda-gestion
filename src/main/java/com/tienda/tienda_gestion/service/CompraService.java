@@ -1,7 +1,9 @@
 package com.tienda.tienda_gestion.service;
 
 import com.tienda.tienda_gestion.dao.CompraRepository;
+import com.tienda.tienda_gestion.dao.DetalleCompraRepository;
 import com.tienda.tienda_gestion.model.Compra;
+import com.tienda.tienda_gestion.model.DetalleCompra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +19,7 @@ public class CompraService {
     private CompraRepository compraRepository;
     
     @Autowired
-    private ProductoService productoService;
+    private DetalleCompraRepository detalleCompraRepository;
     
     public List<Compra> findAll() {
         return compraRepository.findAll();
@@ -38,6 +40,17 @@ public class CompraService {
     
     public Compra registrarCompra(Compra compra) {
         return compraRepository.save(compra);
+    }
+    
+    public Compra registrarCompra(Compra compra, List<DetalleCompra> detalles) {
+        Compra compraGuardada = compraRepository.save(compra);
+        
+        for (DetalleCompra detalle : detalles) {
+            detalle.setCompra(compraGuardada);
+            detalleCompraRepository.save(detalle);
+        }
+        
+        return compraGuardada;
     }
     
     public void deleteById(Long id) {

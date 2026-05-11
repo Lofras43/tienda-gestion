@@ -40,7 +40,7 @@ public class ProductoValidator {
         }
         
         if (producto.getStockMinimo() == null) {
-            errores.add("El stock mínimo es obligatorio");
+            producto.setStockMinimo(10);
         } else if (producto.getStockMinimo() < 0) {
             errores.add("El stock mínimo no puede ser negativo");
         }

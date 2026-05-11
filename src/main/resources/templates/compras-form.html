@@ -1,102 +1,86 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nueva Compra - Tienda Gestión</title>
+    <title>Compras · Tienda Gestión</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-brand">Mi Tienda</div>
-        <div class="navbar-menu">
-            <a th:href="@{/dashboard}">🏠 Dashboard</a>
-            <a th:href="@{/productos}">📦 Productos</a>
-            <a th:href="@{/ventas}">💰 Ventas</a>
-            <a th:href="@{/compras}" class="active">🛒 Compras</a>
-            <a th:href="@{/alertas}">🔔 Alertas</a>
-            <a th:href="@{/reportes}">📊 Reportes</a>
-            <a th:href="@{/logout}">🚪 Salir</a>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand"><div class="brand-logo">🏪</div><div class="brand-text"><h2>Tienda Gestión</h2><p>Panel Admin</p></div></div>
+        <nav class="nav-list">
+            <div class="nav-section-title">Principal</div>
+            <a th:href="@{/dashboard}" class="nav-item"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg></span>Dashboard</a>
+            <a th:href="@{/productos}" class="nav-item"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>Productos</a>
+            <a th:href="@{/ventas}" class="nav-item"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Ventas</a>
+            <a th:href="@{/compras}" class="nav-item active"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Compras</a>
+            <div class="nav-section-title" style="margin-top:.75rem;">Insights</div>
+            <a th:href="@{/alertas}" class="nav-item "><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>Alertas<span class="nav-badge">3</span></a>
+            <a th:href="@{/reportes}" class="nav-item "><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>Reportes</a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="avatar">A</div>
+            <div class="user-info"><strong>Admin</strong><span>admin@tienda.com</span></div>
+            <a th:href="@{/logout}" class="logout-btn" title="Cerrar sesión"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
         </div>
-    </nav>
-    
-    <div class="container">
-        <div class="page-header">
-            <h1>Nueva Compra</h1>
+    </aside>
+    <main class="main">
+        <header class="topbar">
+            <div><h1>Compras</h1><div class="crumbs">Inicio / Compras</div></div>
+            <div class="topbar-spacer"></div>
+            <div class="search-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Buscar..."></div>
+            <button class="icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="dot"></span></button>
+        </header>
+        <div class="content">
+<div class="page-header"><div><h1>Nueva compra</h1><p class="subtitle">Registra una compra a proveedor</p></div><a th:href="@{/compras}" class="btn btn-secondary">← Volver</a></div>
+<div class="card" style="max-width:780px;">
+    <form th:action="@{/compras/guardar}" th:object="${compra}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{total}">
+        <div class="form-row">
+            <div class="form-group"><label>Proveedor</label><input type="text" th:field="*{proveedor}" placeholder="Nombre del proveedor" required></div>
+            <div class="form-group"><label>N° Factura</label><input type="text" id="numeroFactura" th:field="*{numeroFactura}" readonly></div>
         </div>
-        
-        <form th:action="@{/compras/guardar}" th:object="${compra}" method="post" class="form">
-            <div class="form-group">
-                <label for="producto">Producto</label>
-                <select id="producto" name="productoId" required onchange="cargarProducto()">
-                    <option value="">-- Seleccionar --</option>
-                    <option th:each="prod : ${productos}" 
-                            th:value="${prod.id}" 
-                            th:data-precio="${prod.precioCompra}"
-                            th:data-stock="${prod.stock}"
-                            th:text="${prod.nombre + ' (Stock: ' + prod.stock + ')'}">
-                    </option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="cantidad">Cantidad a Comprar</label>
-                <input type="number" id="cantidad" name="cantidad" min="1" value="1" required oninput="calcularTotal()">
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="proveedor">Proveedor</label>
-                    <input type="text" id="proveedor" th:field="*{proveedor}" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="numeroFactura">N° de Factura</label>
-                    <input type="text" id="numeroFactura" th:field="*{numeroFactura}" readonly>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="precioUnitario">Precio Unitario (S/)</label>
-                    <input type="number" step="0.01" id="precioUnitario" name="precioUnitario" value="0" required oninput="calcularTotal()">
-                </div>
-                
-                <div class="form-group">
-                    <label for="total">Total (S/)</label>
-                    <input type="number" step="0.01" id="total" th:field="*{total}" readonly style="font-weight: bold; font-size: 1.2em;">
-                </div>
-            </div>
-            
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">💾 Guardar Compra</button>
-                <a th:href="@{/compras}" class="btn btn-secondary">Cancelar</a>
-            </div>
-        </form>
-    </div>
-    
+        <div class="form-row">
+            <div class="form-group"><label>Producto</label><select name="productoId" id="producto" onchange="cargarProducto()">
+                <option value="">-- Seleccionar --</option>
+                <option th:each="p : ${productos}" th:value="${p.id}" th:text="${p.nombre}" th:data-precio="${p.precioCompra}" th:data-stock="${p.stock}"></option>
+            </select></div>
+            <div class="form-group"><label>Cantidad</label><input type="number" name="cantidad" id="cantidad" min="1" value="1" required oninput="calcularTotal()"></div>
+            <div class="form-group"><label>Precio unitario (S/)</label><input type="number" step="0.01" name="precioUnitario" id="precioUnitario" value="0" required oninput="calcularTotal()"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-group"><label>Total (S/)</label><input type="number" step="0.01" id="totalDisplay" readonly value="0" style="font-weight:bold; font-size:1.2em;"></div>
+        </div>
+        <div class="form-actions"><a th:href="@{/compras}" class="btn btn-secondary">Cancelar</a><button type="submit" class="btn btn-primary">💾 Guardar compra</button></div>
+    </form>
     <script>
     document.getElementById('numeroFactura').value = 'FAC-' + new Date().getTime();
-    
     function cargarProducto() {
         const select = document.getElementById('producto');
-        const opciones = select.options[select.selectedIndex];
+        const opt = select.options[select.selectedIndex];
         const precioInput = document.getElementById('precioUnitario');
-        
-        if (opciones.value && opciones.dataset.precio) {
-            precioInput.value = opciones.dataset.precio;
+        if (opt.value && opt.dataset.precio) {
+            precioInput.value = opt.dataset.precio;
         } else {
             precioInput.value = 0;
         }
         calcularTotal();
     }
-    
     function calcularTotal() {
-        const cantidad = parseFloat(document.getElementById('cantidad').value) || 0;
+        const cant = parseFloat(document.getElementById('cantidad').value) || 0;
         const precio = parseFloat(document.getElementById('precioUnitario').value) || 0;
-        const total = cantidad * precio;
-        document.getElementById('total').value = total.toFixed(2);
+        const total = cant * precio;
+        document.getElementById('totalDisplay').value = total.toFixed(2);
     }
     </script>
+</div>
+        </div>
+    </main>
+</div>
 </body>
 </html>

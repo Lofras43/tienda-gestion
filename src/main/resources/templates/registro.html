@@ -1,48 +1,93 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Tienda Gestión</title>
+    <title>Registro · Tienda Gestión</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body class="login-page">
-    <div class="login-container">
-        <div class="login-box">
-            <div class="logo">
-                <span class="logo-icon">🏪</span>
+<body>
+    <div class="auth-page">
+        <aside class="auth-visual">
+            <span class="blob a"></span>
+            <span class="blob b"></span>
+            <span class="blob c"></span>
+            <div class="auth-visual-inner">
+                <div class="auth-brand">
+                    <div class="brand-logo">🏪</div>
+                    <span>Tienda Gestión</span>
+                </div>
+
+                <div style="flex:1; display:grid; place-items:center; position:relative; z-index:1; margin:2rem 0;">
+                    <svg width="320" height="260" viewBox="0 0 320 260" fill="none">
+                        <defs>
+                            <linearGradient id="r1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+                            <linearGradient id="r2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#ec4899"/></linearGradient>
+                        </defs>
+                        <rect x="60" y="40" width="200" height="180" rx="20" fill="white" fill-opacity=".95"/>
+                        <circle cx="160" cy="95" r="32" fill="url(#r1)"/>
+                        <path d="M160 85 l6 10 h-12 z M160 105 l-8 10 h16 z" fill="#fff"/>
+                        <rect x="90" y="145" width="140" height="10" rx="5" fill="#e2e8f0"/>
+                        <rect x="110" y="165" width="100" height="10" rx="5" fill="#cbd5e1"/>
+                        <rect x="120" y="190" width="80" height="20" rx="10" fill="url(#r2)"/>
+                        <circle cx="60" cy="50" r="14" fill="#22d3ee"/>
+                        <circle cx="270" cy="200" r="18" fill="#fbbf24"/>
+                    </svg>
+                </div>
+
+                <div>
+                    <h2>Únete y empieza<br/>a vender más hoy.</h2>
+                    <p>Crea tu cuenta gratis y obtén control total de tu tienda en minutos.</p>
+                    <div class="auth-features">
+                        <span class="chip">✨ Sin tarjeta</span>
+                        <span class="chip">🚀 Setup en 2 min</span>
+                        <span class="chip">💎 Premium free</span>
+                    </div>
+                </div>
             </div>
-            <h1>Crear Cuenta</h1>
-            <p class="subtitle">Únete a Tienda Gestión</p>
-            
-            <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
-            
-            <form th:action="@{/registro}" th:object="${usuario}" method="post">
-                <div class="form-group">
-                    <label for="nombre">Nombre Completo</label>
-                    <input type="text" id="nombre" th:field="*{nombre}" placeholder="Tu nombre completo" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="email" id="email" th:field="*{email}" placeholder="tu@email.com" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" th:field="*{password}" placeholder="••••••••" required>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">
-                    <span>✓</span> Registrarse
-                </button>
-            </form>
-            
-            <p class="register-link">
-                ¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión aquí</a>
-            </p>
-        </div>
+        </aside>
+
+        <section class="auth-form">
+            <div class="auth-card">
+                <h1>Crear cuenta 🎉</h1>
+                <p class="subtitle">Empieza gratis, sin compromiso</p>
+
+                <div th:if="${param.error}" class="alert alert-error">✗ Error al crear cuenta. Intenta de nuevo.</div>
+                <div th:if="${param.success}" class="alert alert-success">✓ Cuenta creada. ¡Inicia sesión!</div>
+
+                <form th:action="@{/registro}" method="post">
+                    <div class="form-group">
+                        <label>Nombre completo</label>
+                        <div class="form-input-wrap">
+                            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <input type="text" name="nombre" placeholder="Tu nombre" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo electrónico</label>
+                        <div class="form-input-wrap">
+                            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <input type="email" name="email" placeholder="tu@email.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <div class="form-input-wrap">
+                            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" name="password" placeholder="Mínimo 8 caracteres" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Crear cuenta
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+                </form>
+
+                <p class="register-link mt-2">¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión</a></p>
+            </div>
+        </section>
     </div>
 </body>
 </html>

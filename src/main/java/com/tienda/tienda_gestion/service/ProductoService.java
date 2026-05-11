@@ -54,6 +54,17 @@ public class ProductoService {
         Optional<Producto> productoOpt = productoRepository.findById(productoId);
         if (productoOpt.isPresent()) {
             Producto producto = productoOpt.get();
+            producto.setStock(producto.getStock() - cantidad);
+            productoRepository.save(producto);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean aumentarStock(Long productoId, Integer cantidad) {
+        Optional<Producto> productoOpt = productoRepository.findById(productoId);
+        if (productoOpt.isPresent()) {
+            Producto producto = productoOpt.get();
             producto.setStock(producto.getStock() + cantidad);
             productoRepository.save(producto);
             return true;

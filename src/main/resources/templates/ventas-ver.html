@@ -1,55 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle de Venta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas · Tienda Gestión</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-brand">Mi Tienda</div>
-        <div class="navbar-menu">
-            <a th:href="@{/dashboard}">🏠 Dashboard</a>
-            <a th:href="@{/productos}">📦 Productos</a>
-            <a th:href="@{/ventas}" class="active">💰 Ventas</a>
-            <a th:href="@{/compras}">🛒 Compras</a>
-            <a th:href="@{/alertas}">🔔 Alertas</a>
-            <a th:href="@{/reportes}">📊 Reportes</a>
-            <a th:href="@{/logout}">🚪 Salir</a>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand"><div class="brand-logo">🏪</div><div class="brand-text"><h2>Tienda Gestión</h2><p>Panel Admin</p></div></div>
+        <nav class="nav-list">
+            <div class="nav-section-title">Principal</div>
+            <a th:href="@{/dashboard}" class="nav-item"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg></span>Dashboard</a>
+            <a th:href="@{/productos}" class="nav-item"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>Productos</a>
+            <a th:href="@{/ventas}" class="nav-item active"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Ventas</a>
+            <a th:href="@{/compras}" class="nav-item "><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Compras</a>
+            <div class="nav-section-title" style="margin-top:.75rem;">Insights</div>
+            <a th:href="@{/alertas}" class="nav-item "><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>Alertas<span class="nav-badge">3</span></a>
+            <a th:href="@{/reportes}" class="nav-item "><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>Reportes</a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="avatar">A</div>
+            <div class="user-info"><strong>Admin</strong><span>admin@tienda.com</span></div>
+            <a th:href="@{/logout}" class="logout-btn" title="Cerrar sesión"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
         </div>
-    </nav>
-    
-    <div class="container">
-        <h1>Detalle de Venta #<span th:text="${venta.id}"></span></h1>
-        
-        <div class="info-venta">
-            <p><strong>Fecha:</strong> <span th:text="${#temporals.format(venta.fechaVenta, 'dd/MM/yyyy HH:mm')}"></span></p>
-            <p><strong>Total:</strong> S/ <span th:text="${venta.total}"></span></p>
-            <p><strong>Usuario:</strong> <span th:text="${venta.usuario?.nombre ?: 'N/A'}"></span></p>
+    </aside>
+    <main class="main">
+        <header class="topbar">
+            <div><h1>Ventas</h1><div class="crumbs">Inicio / Ventas</div></div>
+            <div class="topbar-spacer"></div>
+            <div class="search-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Buscar..."></div>
+            <button class="icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="dot"></span></button>
+        </header>
+        <div class="content">
+<div class="page-header"><div><h1 th:text="'Venta #' + ${venta.id}">Venta</h1><p class="subtitle" th:text="${#temporals.format(venta.fechaVenta, 'dd/MM/yyyy HH:mm')}">—</p></div><a th:href="@{/ventas}" class="btn btn-secondary">← Volver</a></div>
+<div class="grid-2">
+    <div class="card">
+        <div class="card-header"><div class="card-title"><div class="title-badge">🧾</div>Detalle</div><span class="badge badge-success">Pagada</span></div>
+        <div class="table-wrap" style="box-shadow:none; border:1px solid var(--border);">
+            <table><thead><tr><th>Producto</th><th>Cant.</th><th>Precio</th><th style="text-align:right;">Subtotal</th></tr></thead>
+            <tbody><tr th:each="d : ${venta.detalles}"><td th:text="${d.producto.nombre}">—</td><td th:text="${d.cantidad}">0</td><td>S/ <span th:text="${d.precioUnitario}">0</span></td><td style="text-align:right;"><strong>S/ <span th:text="${d.subtotal}">0</span></strong></td></tr></tbody></table>
         </div>
-        
-        <h2>Productos Vendidos</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unit.</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="detalle : ${detalles}">
-                    <td th:text="${detalle.producto.nombre}"></td>
-                    <td th:text="${detalle.cantidad}"></td>
-                    <td>S/ <span th:text="${detalle.precioUnitario}"></span></td>
-                    <td>S/ <span th:text="${detalle.subtotal}"></span></td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <a href="/ventas" class="btn btn-secondary">Volver</a>
     </div>
+    <div class="card">
+        <div class="card-header"><div class="card-title"><div class="title-badge" style="background:var(--grad-forest);">💵</div>Total</div></div>
+        <div style="text-align:center; padding:1.5rem 0;"><div style="font-size:3rem; font-weight:800; background:var(--grad-primary); -webkit-background-clip:text; background-clip:text; color:transparent;">S/ <span th:text="${venta.total}">0</span></div><p class="text-muted">Total de la venta</p></div>
+    </div>
+</div>
+        </div>
+    </main>
+</div>
 </body>
 </html>

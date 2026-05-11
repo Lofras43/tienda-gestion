@@ -2,19 +2,18 @@ package com.tienda.tienda_gestion.controller;
 
 import com.tienda.tienda_gestion.model.Producto;
 import com.tienda.tienda_gestion.service.ProductoService;
-import com.tienda.tienda_gestion.util.FechaUtil;
-import com.tienda.tienda_gestion.util.MonedaUtil;
 import com.tienda.tienda_gestion.util.ProductoValidator;
-import com.tienda.tienda_gestion.dto.ProductoDTO;
-import com.tienda.tienda_gestion.mapper.EntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.beans.PropertyEditorSupport;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/productos")
@@ -23,20 +22,25 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
     
-    @Autowired
-    private ProductoValidator productoValidator;
-    
-    @Autowired
-    private EntityMapper entityMapper;
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                if (text != null && !text.trim().isEmpty()) {
+                    setValue(LocalDate.parse(text, formatter));
+                } else {
+                    setValue(null);
+                }
+            }
+        });
+    }
     
     @GetMapping
     public String listarProductos(Model model) {
         List<Producto> productos = productoService.findAll();
-        List<ProductoDTO> productosDTO = productos.stream()
-            .map(p -> entityMapper.toProductoDTO(p))
-            .collect(Collectors.toList());
         model.addAttribute("productos", productos);
-        model.addAttribute("productosDTO", productosDTO);
         return "productos";
     }
     

@@ -41,11 +41,26 @@ public class VentaController {
     }
     
     @PostMapping("/guardar")
-    public String guardarVenta(@RequestParam List<Long> productoIds,
-                               @RequestParam List<Integer> cantidades,
-                               @RequestParam List<Double> precios,
+    public String guardarVenta(@RequestParam(required = false) List<Long> productoIds,
+                               @RequestParam(required = false) List<Integer> cantidades,
+                               @RequestParam(required = false) List<Double> precios,
                                RedirectAttributes redirectAttributes) {
         try {
+            if (productoIds == null || productoIds.isEmpty()) {
+                redirectAttributes.addFlashAttribute("error", "Debe agregar al menos un producto a la venta");
+                return "redirect:/ventas/nueva";
+            }
+            
+            if (cantidades == null || cantidades.size() != productoIds.size()) {
+                redirectAttributes.addFlashAttribute("error", "Los datos de la venta son inválidos");
+                return "redirect:/ventas/nueva";
+            }
+            
+            if (precios == null || precios.size() != productoIds.size()) {
+                redirectAttributes.addFlashAttribute("error", "Los datos de la venta son inválidos");
+                return "redirect:/ventas/nueva";
+            }
+            
             List<DetalleVenta> detalles = new ArrayList<>();
             for (int i = 0; i < productoIds.size(); i++) {
                 DetalleVenta detalle = new DetalleVenta();

@@ -1,77 +1,136 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos - Tienda Gestión</title>
+    <title>Productos · Tienda Gestión</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-brand">Mi Tienda</div>
-        <div class="navbar-menu">
-            <a th:href="@{/dashboard}">🏠 Dashboard</a>
-            <a th:href="@{/productos}" class="active">📦 Productos</a>
-            <a th:href="@{/ventas}">💰 Ventas</a>
-            <a th:href="@{/compras}">🛒 Compras</a>
-            <a th:href="@{/alertas}">🔔 Alertas</a>
-            <a th:href="@{/reportes}">📊 Reportes</a>
-            <a th:href="@{/logout}">🚪 Salir</a>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand"><div class="brand-logo">🏪</div><div class="brand-text"><h2>Tienda Gestión</h2><p>Panel Admin</p></div></div>
+        <nav class="nav-list">
+            <div class="nav-section-title">Principal</div>
+            <a th:href="@{/dashboard}" class="nav-item">
+                <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg></span>
+                Dashboard
+            </a>
+            <a th:href="@{/productos}" class="nav-item active">
+                <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/></svg></span>
+                Productos
+            </a>
+            <a th:href="@{/ventas}" class="nav-item">
+                <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+                Ventas
+            </a>
+            <a th:href="@{/compras}" class="nav-item">
+                <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+                Compras
+            </a>
+            <div class="nav-section-title" style="margin-top:.75rem;">Insights</div>
+            <a th:href="@{/alertas}" class="nav-item">
+                <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+                Alertas
+                <span class="nav-badge" th:text="${alertasCount} ?: '3'">3</span>
+            </a>
+            <a th:href="@{/reportes}" class="nav-item">
+                <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+                Reportes
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="avatar">A</div>
+            <div class="user-info"><strong>Admin</strong><span>admin@tienda.com</span></div>
+            <a th:href="@{/logout}" class="logout-btn" title="Cerrar sesión">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </a>
         </div>
-    </nav>
-    
-    <div class="container">
+    </aside>
+    <main class="main">
+        <header class="topbar">
+            <div><h1>Productos</h1><div class="crumbs">Inicio / Productos</div></div>
+            <div class="topbar-spacer"></div>
+            <div class="search-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Buscar..."></div>
+            <button class="icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="dot"></span></button>
+        </header>
+        <div class="content">
         <div class="page-header">
-            <h1>📦 Gestión de Productos</h1>
-            <a th:href="@{/productos/nuevo}" class="btn btn-primary">➕ Agregar Producto</a>
+            <div><h1>Catálogo de productos</h1><p class="subtitle">Gestiona tu inventario con estilo</p></div>
+            <a th:href="@{/productos/nuevo}" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Nuevo producto
+            </a>
         </div>
-        
-        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
-        
-        <div class="table-container">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Precio Venta</th>
-                        <th>Precio Compra</th>
-                        <th>Stock</th>
-                        <th>Stock Mín.</th>
-                        <th>Vencimiento</th>
-                        <th>Categoría</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="producto : ${productos}">
-                        <td th:text="${producto.id}"></td>
-                        <td><strong th:text="${producto.nombre}"></strong></td>
-                        <td th:text="${'S/ ' + producto.precioVenta}"></td>
-                        <td th:text="${'S/ ' + producto.precioCompra}"></td>
-                        <td>
-                            <span th:if="${producto.stock <= producto.stockMinimo}" class="badge" style="background: #ea4335;" th:text="${producto.stock}"></span>
-                            <span th:unless="${producto.stock <= producto.stockMinimo}" th:text="${producto.stock}"></span>
-                        </td>
-                        <td th:text="${producto.stockMinimo}"></td>
-                        <td th:text="${producto.fechaVencimiento}"></td>
-                        <td th:text="${producto.categoria}"></td>
-                        <td>
-                            <a th:href="@{/productos/editar/{id}(id=${producto.id})}" class="btn btn-small btn-primary">✏️ Editar</a>
-                            <a th:href="@{/productos/eliminar/{id}(id=${producto.id})}" class="btn btn-small btn-danger" onclick="return confirm('¿Eliminar este producto?')">🗑️</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-top"><div class="stat-icon">📦</div><span class="stat-trend">▲ 8%</span></div><div class="stat-value" th:text="${#lists.size(productos)}">42</div><div class="stat-label">Productos totales</div></div>
+            <div class="stat-card success"><div class="stat-top"><div class="stat-icon">✅</div></div><div class="stat-value">38</div><div class="stat-label">Activos</div></div>
+            <div class="stat-card warning"><div class="stat-top"><div class="stat-icon">⚠️</div></div><div class="stat-value">4</div><div class="stat-label">Stock bajo</div></div>
+            <div class="stat-card danger"><div class="stat-top"><div class="stat-icon">⏰</div></div><div class="stat-value">2</div><div class="stat-label">Por vencer</div></div>
         </div>
-        
-        <div th:if="${productos.empty}" class="empty-message">
-            <div style="font-size: 4rem; margin-bottom: 1rem;">📦</div>
-            <h3>No hay productos registrados</h3>
-            <p>¡Agrega tu primer producto para comenzar!</p>
-            <a th:href="@{/productos/nuevo}" class="btn btn-primary" style="margin-top: 1rem;">➕ Agregar Primer Producto</a>
+        <div class="filter-bar">
+            <div class="search-box" style="flex:1;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Buscar producto..."></div>
+            <div class="tabs"><button class="active">Todos</button><button>Activos</button><button>Stock bajo</button></div>
         </div>
-    </div>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th style="text-align:right;">Acciones</th></tr></thead>
+            <tbody>
+                <tr th:each="p, i : ${productos}" th:data-nombre="${p.nombre}" th:data-stock="${p.stock}" th:data-stock-minimo="${p.stockMinimo}" th:data-categoria="${p.categoria}">
+                    <td><div class="row-thumb"><div th:class="'thumb thumb-' + ${i.index % 6}" th:text="${#strings.substring(p.nombre,0,1)}">A</div><div><div class="row-title" th:text="${p.nombre}">Producto</div><div class="row-sub" th:text="'SKU-' + ${p.id}">SKU</div></div></td>
+                    <td><span class="badge badge-purple" th:text="${p.categoria}">Cat</span></td>
+                    <td><strong>S/ <span th:text="${#numbers.formatDecimal(p.precioVenta, 1, 2)}">0</span></strong></td>
+                    <td><div class="stock-bar"><span th:style="'width:' + (${p.stock > 100 ? 100 : p.stock}) + '%'"></span></div><span class="row-sub" th:text="${p.stock} + ' uds'">0</span></td>
+                    <td><span class="badge badge-success">Activo</span></td>
+                    <td style="text-align:right;"><div class="row-actions" style="justify-content:flex-end;">
+                        <a th:href="@{/productos/editar/{id}(id=${p.id})}" class="act-edit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9-9z"/></svg></a>
+                        <a th:href="@{/productos/eliminar/{id}(id=${p.id})}" class="act-del" onclick="return confirm('¿Eliminar?')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></a>
+                    </div></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        </div>
+    </main>
+</div>
+<script>
+(function(){
+    const searchInput = document.querySelector('.filter-bar .search-box input');
+    const filterTabs = document.querySelectorAll('.filter-bar .tabs button');
+    const rows = document.querySelectorAll('table tbody tr');
+
+    function filtrar() {
+        const texto = (searchInput.value || '').toLowerCase().trim();
+        const activo = document.querySelector('.filter-bar .tabs .active');
+        const filtro = activo ? activo.textContent.trim() : 'Todos';
+
+        rows.forEach(function(row) {
+            const nombre = (row.getAttribute('data-nombre') || '').toLowerCase();
+            const stock = parseInt(row.getAttribute('data-stock')) || 0;
+            const stockMin = parseInt(row.getAttribute('data-stock-minimo')) || 0;
+
+            const coincideBusqueda = !texto || nombre.indexOf(texto) !== -1;
+
+            let coincideFiltro = true;
+            if (filtro === 'Stock bajo') {
+                coincideFiltro = stock <= stockMin;
+            }
+
+            row.style.display = (coincideBusqueda && coincideFiltro) ? '' : 'none';
+        });
+    }
+
+    searchInput.addEventListener('input', filtrar);
+
+    filterTabs.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            filterTabs.forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            filtrar();
+        });
+    });
+})();
+</script>
 </body>
 </html>

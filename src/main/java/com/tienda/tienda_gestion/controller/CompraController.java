@@ -1,6 +1,5 @@
 package com.tienda.tienda_gestion.controller;
 
-import com.tienda.tienda_gestion.dao.DetalleCompraRepository;
 import com.tienda.tienda_gestion.model.Compra;
 import com.tienda.tienda_gestion.model.DetalleCompra;
 import com.tienda.tienda_gestion.service.CompraService;
@@ -11,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/compras")
 public class CompraController {
@@ -22,9 +19,6 @@ public class CompraController {
     
     @Autowired
     private ProductoService productoService;
-    
-    @Autowired
-    private DetalleCompraRepository detalleCompraRepository;
     
     @GetMapping
     public String listarCompras(Model model) {
@@ -40,7 +34,8 @@ public class CompraController {
     }
     
     @PostMapping("/guardar")
-    public String guardarCompra(@ModelAttribute Compra compra,
+    public String guardarCompra(@RequestParam String proveedor,
+                         @RequestParam(required = false) String numeroFactura,
                          @RequestParam Long productoId,
                          @RequestParam Integer cantidad,
                          @RequestParam Double precioUnitario,
@@ -56,18 +51,37 @@ public class CompraController {
                 return "redirect:/compras/nueva";
             }
             
-            if (productoId != null && productoId == -1) {
+            if (productoId == null || productoId <= 0) {
                 redirectAttributes.addFlashAttribute("error", "Debe seleccionar un producto válido");
                 return "redirect:/compras/nueva";
             }
             
+            if (proveedor == null || proveedor.trim().isEmpty()) {
+                redirectAttributes.addFlashAttribute("error", "El proveedor es obligatorio");
+                return "redirect:/compras/nueva";
+            }
+            
             java.math.BigDecimal total = java.math.BigDecimal.valueOf(cantidad * precioUnitario);
+            
+            Compra compra = new Compra();
+            compra.setProveedor(proveedor);
+            compra.setNumeroFactura(numeroFactura != null ? numeroFactura : "FAC-" + System.currentTimeMillis());
+            compra.setFechaCompra(java.time.LocalDateTime.now());
             compra.setTotal(total);
             
-            productoService.actualizarStock(productoId, cantidad);
+            DetalleCompra detalle = new DetalleCompra();
+            detalle.setProducto(new com.tienda.tienda_gestion.model.Producto());
+            detalle.getProducto().setId(productoId);
+            detalle.setCantidad(cantidad);
+            detalle.setPrecioUnitario(java.math.BigDecimal.valueOf(precioUnitario));
+            detalle.setSubtotal(total);
+            detalle.setCompra(compra);
             
-            compra.setFechaCompra(java.time.LocalDateTime.now());
-            compraService.registrarCompra(compra);
+            java.util.List<DetalleCompra> detalles = new java.util.ArrayList<>();
+            detalles.add(detalle);
+            
+            compraService.registrarCompra(compra, detalles);
+            productoService.aumentarStock(productoId, cantidad);
             
             redirectAttributes.addFlashAttribute("success", "Compra registrada - Total: S/ " + total);
         } catch (Exception e) {
