@@ -37,7 +37,7 @@
         </header>
         <div class="content">
 <div class="page-header"><div><h1>Reportes y análisis</h1><p class="subtitle">Visualiza el desempeño de tu tienda</p></div>
-    <div class="tabs"><button class="active">Semana</button><button>Mes</button><button>Año</button></div>
+    <div style="display:flex;gap:.5rem;align-items:center;"><div class="tabs"><button class="active">Semana</button><button>Mes</button><button>Año</button></div><a th:href="@{/reportes/exportar}" class="btn btn-primary" style="padding:.5rem 1rem;font-size:.85rem;border-radius:12px;background:var(--grad-forest);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Exportar Excel</a></div>
 </div>
 <div class="stats-grid">
     <div class="stat-card success"><div class="stat-top"><div class="stat-icon">💰</div><span class="stat-trend">▲ 24%</span></div>                    <div class="stat-value">S/ <span th:text="${totalVentas} ?: '12,480'">12,480</span></div><div class="stat-label">Ventas totales</div></div>

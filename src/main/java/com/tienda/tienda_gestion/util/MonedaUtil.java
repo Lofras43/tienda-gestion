@@ -1,5 +1,6 @@
 package com.tienda.tienda_gestion.util;
 
+import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -26,9 +27,7 @@ public class MonedaUtil {
     }
     
     public static BigDecimal calcularSubtotal(BigDecimal precioUnitario, int cantidad) {
-        if (precioUnitario == null) {
-            return BigDecimal.ZERO;
-        }
+        Preconditions.checkNotNull(precioUnitario, "El precio unitario no puede ser null");
         return precioUnitario.multiply(BigDecimal.valueOf(cantidad));
     }
     

@@ -1,5 +1,8 @@
 package com.tienda.tienda_gestion.constant;
 
+import com.google.common.collect.ImmutableList;
+import java.util.List;
+
 public class AppConstants {
     
     public static final String APP_NAME = "Tienda Gestión";
@@ -29,7 +32,7 @@ public class AppConstants {
     public static final String CATEGORIA_LIMPIEZA = "Limpieza";
     public static final String CATEGORIA_OTROS = "Otros";
     
-    public static final String[] CATEGORIAS = {
+    public static final List<String> CATEGORIAS = ImmutableList.of(
         CATEGORIA_ABARROTES,
         CATEGORIA_BEBIDAS,
         CATEGORIA_LACTEOS,
@@ -37,7 +40,7 @@ public class AppConstants {
         CATEGORIA_CONFITERIA,
         CATEGORIA_LIMPIEZA,
         CATEGORIA_OTROS
-    };
+    );
     
     public static final String FECHA_FORMATO = "dd/MM/yyyy";
     public static final String FECHA_HORA_FORMATO = "dd/MM/yyyy HH:mm";

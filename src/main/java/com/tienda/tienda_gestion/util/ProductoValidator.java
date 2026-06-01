@@ -1,6 +1,8 @@
 package com.tienda.tienda_gestion.util;
 
 import com.tienda.tienda_gestion.model.Producto;
+import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,12 +14,9 @@ public class ProductoValidator {
     public static List<String> validar(Producto producto) {
         List<String> errores = new ArrayList<>();
         
-        if (producto == null) {
-            errores.add("El producto no puede ser null");
-            return errores;
-        }
+        Preconditions.checkNotNull(producto, "El producto no puede ser null");
         
-        if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
+        if (StringUtils.isBlank(producto.getNombre())) {
             errores.add("El nombre del producto es obligatorio");
         } else if (producto.getNombre().length() > 200) {
             errores.add("El nombre del producto no puede exceder 200 caracteres");

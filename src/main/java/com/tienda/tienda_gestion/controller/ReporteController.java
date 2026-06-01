@@ -2,7 +2,11 @@ package com.tienda.tienda_gestion.controller;
 
 import com.tienda.tienda_gestion.dto.ResumenDashboardDTO;
 import com.tienda.tienda_gestion.service.ReporteService;
+import com.tienda.tienda_gestion.service.ReporteExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +18,9 @@ public class ReporteController {
     
     @Autowired
     private ReporteService reporteService;
+
+    @Autowired
+    private ReporteExcelService reporteExcelService;
     
     @GetMapping
     public String reportes(Model model) {
@@ -32,5 +39,20 @@ public class ReporteController {
         model.addAttribute("valorInventario", reporteService.calcularValorInventario());
         
         return "reportes";
+    }
+
+    @GetMapping("/exportar")
+    public ResponseEntity<byte[]> exportarExcel() {
+        try {
+            byte[] excelBytes = reporteExcelService.generarExcelCompleto();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", "reporte_tienda.xlsx");
+
+            return ResponseEntity.ok().headers(headers).body(excelBytes);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }

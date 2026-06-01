@@ -9,6 +9,8 @@ import com.tienda.tienda_gestion.dao.VentaRepository;
 import com.tienda.tienda_gestion.dao.CompraRepository;
 import com.tienda.tienda_gestion.util.FechaUtil;
 import com.tienda.tienda_gestion.util.MonedaUtil;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,21 +75,23 @@ public class ReporteService {
     }
     
     public List<Producto> obtenerProductosMasVendidos(int limite) {
-        return productoRepository.findAll().stream()
+        Preconditions.checkArgument(limite > 0, "El límite debe ser mayor a 0");
+        return ImmutableList.copyOf(productoRepository.findAll().stream()
                 .sorted((p1, p2) -> Integer.compare(
                         obtenerTotalVentasProducto(p2),
                         obtenerTotalVentasProducto(p1)))
                 .limit(limite)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
     
     public List<Producto> obtenerProductosMenosVendidos(int limite) {
-        return productoRepository.findAll().stream()
+        Preconditions.checkArgument(limite > 0, "El límite debe ser mayor a 0");
+        return ImmutableList.copyOf(productoRepository.findAll().stream()
                 .sorted((p1, p2) -> Integer.compare(
                         obtenerTotalVentasProducto(p1),
                         obtenerTotalVentasProducto(p2)))
                 .limit(limite)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
     
     public BigDecimal calcularValorInventario() {
