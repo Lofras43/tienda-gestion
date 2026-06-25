@@ -37,8 +37,13 @@ logs/
 backups/
 *.log
 
+### Environment ###
+.env
+.env.local
+
 ### Local docs (not for GitHub) ###
 EXPLICACION_MEJORAS.*
 ANALISIS_RUBRICA.*
 bd_script_completo.sql
 ~$*
+*.pem
