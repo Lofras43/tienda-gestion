@@ -101,46 +101,49 @@ function eliminarProducto(index) {
     actualizarTabla();
 }
 
+function getCsrfToken() {
+    const cookies = document.cookie.split(';');
+    for (let c of cookies) {
+        c = c.trim();
+        if (c.startsWith('XSRF-TOKEN=')) return c.substring('XSRF-TOKEN='.length);
+    }
+    return '';
+}
+
 function registrarVenta() {
     if (productosVenta.length === 0) {
         alert('Agrega al menos un producto a la venta');
         return;
     }
     
-    const productoIds = [];
-    const cantidades = [];
-    const precios = [];
+    const form = document.getElementById('ventaForm');
+    form.innerHTML = '';
+    
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = '_csrf';
+    csrfInput.value = getCsrfToken();
+    form.appendChild(csrfInput);
     
     productosVenta.forEach(p => {
-        productoIds.push(p.id);
-        cantidades.push(p.cantidad);
-        precios.push(p.precio);
-    });
-    
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = '/ventas/guardar';
-    
-    productoIds.forEach((id, i) => {
         const inputId = document.createElement('input');
         inputId.type = 'hidden';
         inputId.name = 'productoIds';
-        inputId.value = id;
+        inputId.value = p.id;
         form.appendChild(inputId);
         
         const inputCant = document.createElement('input');
         inputCant.type = 'hidden';
         inputCant.name = 'cantidades';
-        inputCant.value = cantidades[i];
+        inputCant.value = p.cantidad;
         form.appendChild(inputCant);
         
         const inputPrecio = document.createElement('input');
         inputPrecio.type = 'hidden';
         inputPrecio.name = 'precios';
-        inputPrecio.value = precios[i];
+        inputPrecio.value = p.precio;
         form.appendChild(inputPrecio);
     });
     
-    document.body.appendChild(form);
     form.submit();
 }
