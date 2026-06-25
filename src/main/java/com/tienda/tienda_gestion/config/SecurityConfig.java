@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -22,7 +23,8 @@ public class SecurityConfig {
         http
             .userDetailsService(userDetailsService)
             .authorizeRequests(auth -> auth
-                .antMatchers("/", "/login", "/registro", "/css/**", "/js/**", "/images/**").permitAll()
+                .antMatchers("/", "/login", "/registro", "/css/**", "/js/**", "/images/**",
+                    "/api/health", "/api/info", "/actuator/health", "/actuator/info").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -35,7 +37,10 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
             )
-            .csrf(csrf -> csrf.disable());
+            .csrf(csrf -> csrf
+                .ignoringAntMatchers("/api/**", "/actuator/**")
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            );
         
         return http.build();
     }
