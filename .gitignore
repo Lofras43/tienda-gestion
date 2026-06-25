@@ -36,3 +36,8 @@ build/
 logs/
 backups/
 *.log
+
+### Local docs (not for GitHub) ###
+EXPLICACION_MEJORAS.*
+ANALISIS_RUBRICA.*
+bd_script_completo.sql
